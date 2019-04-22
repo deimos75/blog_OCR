@@ -1,0 +1,10 @@
+<h1 style="text-align: center"> {{title}} </h1>
+
+<!-- Boucle sur les components PostListItemComponent en passant en paramètre les posts de ce component 'postsParam' -->
+<ul class="list-group" style="margin-left: 20%; margin-right: 20%;">
+  <app-post-list-item *ngFor="let item of postsParam"
+                        [titleParam]=item.title
+                        [contentParam]=item.content
+                        [loveItsParam]=item.loveIts>
+  </app-post-list-item>
+</ul>

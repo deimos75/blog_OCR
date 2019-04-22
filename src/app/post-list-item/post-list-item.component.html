@@ -1,0 +1,18 @@
+<li [ngClass]="{'list-group-item': true,
+              'list-group-item-success': signeLoveIts == 'positif',
+              'list-group-item-danger': signeLoveIts == 'négatif'}">
+    
+    <table>
+      <tr>
+        <td><h2>{{post.title}}</h2></td>
+        <td><span style="position: absolute; right:2%; font-style: italic;">Créée le {{post.date | date: 'dd/MM/yyyy'}} à {{post.date | date: 'HH:mm:ss'}}</span></td>
+      </tr>
+      <tr>
+        <td><p>{{post.content}}</p></td>
+        <td></td>
+      </tr> 
+    </table>
+    
+    <button class="btn btn-success" (click)="onLoveItsPlus()" style="margin-right:2%;">Love its</button>
+    <button class="btn btn-danger" (click)="onLoveItsMinus()">Don't love its</button>
+</li>
