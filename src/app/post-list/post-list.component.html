@@ -2,7 +2,7 @@
 
 <!-- Boucle sur les components PostListItemComponent en passant en paramètre les posts de ce component 'postsParam' -->
 <ul class="list-group" style="margin-left: 20%; margin-right: 20%;">
-  <app-post-list-item *ngFor="let item of postsParam"
+  <app-post-list-item *ngFor="let item of posts"
                         [titleParam]=item.title
                         [contentParam]=item.content
                         [loveItsParam]=item.loveIts>

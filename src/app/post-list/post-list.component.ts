@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PostService } from '../post.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
@@ -8,20 +9,27 @@ import { PostService } from '../post.service';
 })
 export class PostListComponent implements OnInit {
 
-  // Paramètre
-  postsParam = [{
+  // Attributs
+  title = 'Posts';
+  posts = [{
     title: '',
     content: '',
-    loveIts: ''
+    loveIts: 0
   }];
 
-  // Attribut
-  title = 'Posts';
+  postSubscription: Subscription;
 
   constructor(private postService: PostService) { }
 
   ngOnInit() {
-    this.postsParam = this.postService.getPosts();
+    // La souscription au Subject du service est stockée dans "postSubscription"
+    this.postSubscription = this.postService.postSubject.subscribe(
+      (posts: any[]) => {
+        this.posts = posts;
+      }
+    );
+    // On émet la souscription pour récupérer les posts
+    this.postService.emitPostSubject();
   }
 
 }
