@@ -1,14 +1,15 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Post } from './models/post.model';
 
 @Injectable()
-export class PostService implements OnInit {
+export class PostService {
 
     // Tableau des postes
-    private posts = [
-        {title: 'Titre 1', content: 'contenu 1', date: Date(), loveIts: 1},
-        {title: 'Titre 2', content: 'contenu 2', date: Date(), loveIts: 0},
-        {title: 'Titre 3', content: 'contenu 3', date: Date(), loveIts: -1},
+    posts = [
+        {title: 'Titre 1', content: 'contenu 1', date: new Date(), loveIts: 1},
+        {title: 'Titre 2', content: 'contenu 2', date: new Date(), loveIts: 0},
+        {title: 'Titre 3', content: 'contenu 3', date: new Date(), loveIts: -1},
     ];
 
     // Subject qui émettra le tableau des posts (grâce à emitPosts())
@@ -16,9 +17,6 @@ export class PostService implements OnInit {
 
     constructor() {}
 
-    ngOnInit() {
-        this.getPosts();
-    }
 
     // ***************************************************** /
     // Emet le subject
@@ -33,18 +31,10 @@ export class PostService implements OnInit {
     }
 
     // Ajout d'un post
-    addPost(title: string, content: string, loveIts: number) {
-        console.log('===> addPost');
-        const newPost = {
-            title: '',
-            content: '',
-            date: Date(),
-            loveIts: 0
-        };
-        newPost.title = title;
-        newPost.content = content;
-        newPost.loveIts = loveIts;
+    addPost(newPost: Post) {
+        console.log('===> Post Service -> addPost()');
         this.posts.push(newPost);
+        this.emitPostSubject();
     }
 
 }

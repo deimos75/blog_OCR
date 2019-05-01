@@ -1,3 +1,26 @@
-<p>
-  new-post works :D
-</p>
+<!-- Formulaire: nouveau post -->
+<div class="row">
+  <div class="col-sm-8 col-offset-6">
+
+    <h2>Enregistrer un nouveau post</h2>
+    
+    <form [formGroup]="postForm" (ngSubmit)="onSavePost()">
+      <!-- Titre -->
+      <div class="form-group">
+        <label for="title">Titre</label>
+        <input type="text" id="title" class="form-control" formControlName="title">
+      </div>
+
+      <!-- Contenu -->
+      <div class="form-group">
+        <label for="content">Contenu</label>
+        <input type="textarea" id="content" class="form-control" formControlName="content">
+      </div>
+      
+      <!-- Bouton valider -->
+      <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid" >Enregistrer</button>
+    </form>
+
+
+  </div>
+</div>

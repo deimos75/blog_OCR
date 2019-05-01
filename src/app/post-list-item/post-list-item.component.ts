@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PostService } from '../post.service';
+import { Post } from '../models/post.model';
 
 @Component({
   selector: 'app-post-list-item',
@@ -52,14 +53,14 @@ export class PostListItemComponent implements OnInit {
 }
 
 
-export class Post {
-  date: Date;
+// export class Post {
+//   date: Date;
 
-  constructor(public title: string, public content: string, public loveIts: number) {
-    this.title = title;
-    this.content = content;
-    this.loveIts = loveIts;
-    this.date = new Date();
-  }
+//   constructor(public title: string, public content: string, public loveIts: number) {
+//     this.title = title;
+//     this.content = content;
+//     this.loveIts = loveIts;
+//     this.date = new Date();
+//   }
 
-}
+// }

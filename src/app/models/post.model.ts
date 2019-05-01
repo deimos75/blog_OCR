@@ -1,4 +1,5 @@
-export class Book {
+export class Post {
+
     date: Date;
 
     constructor(public title: string, public content: string, public loveIts: number) {
