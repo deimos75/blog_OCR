@@ -32,8 +32,13 @@ export class PostService {
 
     // Ajout d'un post
     addPost(newPost: Post) {
-        console.log('===> Post Service -> addPost()');
         this.posts.push(newPost);
+        this.emitPostSubject();
+    }
+
+    // Suppression d'un post
+    deletePost(id: number) {
+        this.posts.splice(id, 1);
         this.emitPostSubject();
     }
 

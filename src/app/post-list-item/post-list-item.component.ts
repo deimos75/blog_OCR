@@ -13,12 +13,13 @@ export class PostListItemComponent implements OnInit {
   @Input() titleParam: string;
   @Input() contentParam: string;
   @Input() loveItsParam: number;
+  @Input() idParam: number;
 
   // Attibuts
   post: Post;
   signeLoveIts: string;
 
-  constructor() { }
+  constructor(private postService: PostService) { }
 
 
 
@@ -50,17 +51,8 @@ export class PostListItemComponent implements OnInit {
     console.log('loveIts = ' + this.loveItsParam);
   }
 
+  onDelete() {
+    this.postService.deletePost(this.idParam);
+  }
+
 }
-
-
-// export class Post {
-//   date: Date;
-
-//   constructor(public title: string, public content: string, public loveIts: number) {
-//     this.title = title;
-//     this.content = content;
-//     this.loveIts = loveIts;
-//     this.date = new Date();
-//   }
-
-// }
