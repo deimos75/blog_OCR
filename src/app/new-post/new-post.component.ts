@@ -32,15 +32,12 @@ export class NewPostComponent implements OnInit {
 
   // Enregitrer un nouveau post
   onSavePost() {
-    console.log('===> Click: enregister un nouveau post');
     // Récupère les données du DOM
     const title = this.postForm.get('title').value;
     const content = this.postForm.get('content').value;
     const newPost = new Post(title, content, 0);
-    console.log('===> Titre : ' + title);
-    console.log('===> Contenu : ' + content);
 
-    // Sauvegarde du nouveau poste
+    // Ajout d'un nouveau poste au tableau des postes et sauvegarde en BDD
     this.postService.addPost(newPost);
 
     // Rédirection vers les posts

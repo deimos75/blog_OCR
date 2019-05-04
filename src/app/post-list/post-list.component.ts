@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PostService } from '../post.service';
 import { Subscription } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnDestroy {
 
   // Attributs
   title = 'Posts';
@@ -23,13 +23,25 @@ export class PostListComponent implements OnInit {
 
   ngOnInit() {
     // La souscription au Subject du service est stockée dans "postSubscription"
+    // Cela permet de récupérer les postes (et par la suite de pouvoir faire un unsubscribe)
     this.postSubscription = this.postService.postSubject.subscribe(
       (posts: any[]) => {
         this.posts = posts;
       }
     );
     // On émet la souscription pour récupérer les posts
-    this.postService.emitPostSubject();
+    // this.postService.emitPostSubject();
+
+    // Récupère les postes en BDD
+    this.postService.getPosts();
+  }
+
+  onReload() {
+    this.postService.getPosts();
+  }
+
+  ngOnDestroy() {
+    this.postSubscription.unsubscribe();
   }
 
 }
