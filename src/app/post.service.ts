@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Post } from './models/post.model';
-import { HttpClient } from '@angular/common/http';
+import * as firebase from 'firebase';
+import DataSnapshot = firebase.database.DataSnapshot;
+import { DatePipe } from '@angular/common';
 
 @Injectable() // Permet d'injecter HttpClientModule
 export class PostService {
@@ -12,7 +14,7 @@ export class PostService {
     // Subject qui émettra le tableau des posts (grâce à emitPosts())
     postSubject = new Subject<any[]>();
 
-    constructor(private httpClient: HttpClient) {
+    constructor(public datepipe: DatePipe) {
         this.getPosts();
     }
 
@@ -25,53 +27,47 @@ export class PostService {
     }
 
     // Ajout d'un post
-    addPost(newPost: Post) {
+    addPost(newPost: Post, enregistrer: Boolean) {
         this.posts.push(newPost);
-        this.savePosts();
+        this.savePosts(enregistrer);
         this.emitPostSubject();
     }
 
     // Suppression d'un post en local
     deletePost(id: number) {
+        const enregistrer = false;
         this.posts.splice(id, 1);
-        this.savePosts();
+        this.savePosts(enregistrer);
         this.emitPostSubject();
     }
 
     // Sauvegarde des posts
-    savePosts() {
-        console.log('');
-        console.log('===> SERVICE: savePost()');
-        this.httpClient.put('https://blog-31933.firebaseio.com/posts.json', this.posts).subscribe(
-            () => {
-                console.log('===> this.posts : ' + this.posts);
-                console.log('Enregistrement terminé !');
-            },
-            (error) => {
-                console.log('Erreur de sauvegarde : ' + error);
-            }
-        );
-        console.log('===> this.posts : ' + this.posts);
-        console.log('===> FIN savePosts()');
+    savePosts(enregistrer: Boolean) {
+        // Sauvegarde de la date du jour s'il y a un tableau et un nouveau poste
+        const taille = this.posts.length;
+        if (taille !== 0 && enregistrer) {
+            this.posts[taille - 1].date = new Date();
+            // Conversion en string pour l'enregistrement en BDD
+            const latest_date = this.datepipe.transform(this.posts[taille - 1].date, 'Créée le dd/MM/yyyy à HH:mm:ss');
+            this.posts[taille - 1].date = latest_date;
+        }
+
+        firebase.database().ref('/posts').set(this.posts);
+        this.emitPostSubject();
     }
 
     // Récupère les posts depuis la BDD
     getPosts() {
-        console.log('');
-        console.log('SERVICE: getPosts()');
-        this.httpClient.get<any[]>('https://blog-31933.firebaseio.com/posts.json').subscribe(
-            (reponse) => {
-                this.posts = reponse;
-                this.emitPostSubject();     // Affiche sur la page les données récupérées de la BDD
-                console.log('===> this.posts : ' + this.posts);
-                console.log('===> get SUCCESS');
-            },
-            (error) => {
-                console.log('Erreur dans la récupération des posts: ' + error);
-            }
-        );
-        console.log('===> this.posts = ' + this.posts);
-        console.log('===> FIN getPost()');
+        firebase.database().ref('/posts').on('value', (data: DataSnapshot) => {
+            this.posts = data.val() ? data.val() : [];
+            this.emitPostSubject();
+        });
+    }
+
+    saveLoveIts(id: number, loveIts: number) {
+        this.posts[id].loveIts = loveIts;
+        const enregistrer = false;
+        this.savePosts(enregistrer);
     }
 
 }

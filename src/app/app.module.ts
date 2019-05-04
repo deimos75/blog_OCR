@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';  // Permet l'accès à la BDD
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { PostListComponent } from './post-list/post-list.component';
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    PostService
+    PostService,
+    [DatePipe]
   ],
   bootstrap: [AppComponent]
 })

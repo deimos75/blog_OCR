@@ -13,6 +13,7 @@ export class PostListItemComponent implements OnInit {
   @Input() titleParam: string;
   @Input() contentParam: string;
   @Input() loveItsParam: number;
+  @Input() dateParam: string;
   @Input() idParam: number;
 
   // Attibuts
@@ -21,10 +22,8 @@ export class PostListItemComponent implements OnInit {
 
   constructor(private postService: PostService) { }
 
-
-
   ngOnInit() {
-    this.post = new Post(this.titleParam, this.contentParam, this.loveItsParam);
+    this.post = new Post(this.titleParam, this.contentParam, this.loveItsParam, this.dateParam);
     this.initColor();
   }
 
@@ -42,12 +41,14 @@ export class PostListItemComponent implements OnInit {
   onLoveItsPlus() {
     this.loveItsParam++;
     this.initColor();
+    this.postService.saveLoveIts(this.idParam, this.loveItsParam);
     console.log('loveIts = ' + this.loveItsParam);
   }
 
   onLoveItsMinus() {
     this.loveItsParam--;
     this.initColor();
+    this.postService.saveLoveIts(this.idParam, this.loveItsParam);
     console.log('loveIts = ' + this.loveItsParam);
   }
 

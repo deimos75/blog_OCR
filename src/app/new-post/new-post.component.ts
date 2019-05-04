@@ -26,7 +26,7 @@ export class NewPostComponent implements OnInit {
       title: ['', Validators.required],
       content: ['', Validators.required],
       loveIts: [0],
-      date: new Date()
+      date: ''
     });
   }
 
@@ -35,10 +35,11 @@ export class NewPostComponent implements OnInit {
     // Récupère les données du DOM
     const title = this.postForm.get('title').value;
     const content = this.postForm.get('content').value;
-    const newPost = new Post(title, content, 0);
+    const newPost = new Post(title, content, 0, '');
 
     // Ajout d'un nouveau poste au tableau des postes et sauvegarde en BDD
-    this.postService.addPost(newPost);
+    const enregister: Boolean = true;
+    this.postService.addPost(newPost, enregister);
 
     // Rédirection vers les posts
     this.router.navigate(['/posts']);

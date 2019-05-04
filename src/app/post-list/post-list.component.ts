@@ -11,11 +11,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   // Attributs
   title = 'Posts';
-  posts = [{
-    title: '',
-    content: '',
-    loveIts: 0
-  }];
+  posts = [];
 
   postSubscription: Subscription;
 
@@ -30,13 +26,9 @@ export class PostListComponent implements OnInit, OnDestroy {
       }
     );
     // On émet la souscription pour récupérer les posts
-    // this.postService.emitPostSubject();
+    this.postService.emitPostSubject();
 
     // Récupère les postes en BDD
-    this.postService.getPosts();
-  }
-
-  onReload() {
     this.postService.getPosts();
   }
 
