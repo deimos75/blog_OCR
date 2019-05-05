@@ -25,8 +25,6 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.posts = posts;
       }
     );
-    // On émet la souscription pour récupérer les posts
-    this.postService.emitPostSubject();
 
     // Récupère les postes en BDD
     this.postService.getPosts();

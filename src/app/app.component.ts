@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 export class AppComponent {
 
   constructor() {
+    // Configuration de la BDD firebase
     const config = {
       apiKey: 'AIzaSyBw93lm8BevqOI0mBc7xtkrg29leKTKm8w',
       authDomain: 'blog-31933.firebaseapp.com',

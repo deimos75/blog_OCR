@@ -9,7 +9,7 @@ import { Post } from '../models/post.model';
 })
 export class PostListItemComponent implements OnInit {
 
-  // Paramètres
+  // Paramètres provenant de 'post-list.component.html'
   @Input() titleParam: string;
   @Input() contentParam: string;
   @Input() loveItsParam: number;

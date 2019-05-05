@@ -22,18 +22,18 @@ export class PostService {
     // ***************************************************** /
     // Emet le subject (cette méthode est appelée par toute les autres méthodes)
     emitPostSubject() {
-        // Le Subject émet une copie (slice) de tableau local
+        // Le Subject émet (next) une copie (slice) de tableau local
         this.postSubject.next(this.posts.slice());
     }
 
-    // Ajout d'un post
+    // Ajout d'un post en BDD
     addPost(newPost: Post, enregistrer: Boolean) {
         this.posts.push(newPost);
         this.savePosts(enregistrer);
         this.emitPostSubject();
     }
 
-    // Suppression d'un post en local
+    // Suppression d'un post en BDD
     deletePost(id: number) {
         const enregistrer = false;
         this.posts.splice(id, 1);
@@ -41,11 +41,12 @@ export class PostService {
         this.emitPostSubject();
     }
 
-    // Sauvegarde des posts
+    // Sauvegarde des posts en BDD
     savePosts(enregistrer: Boolean) {
         // Sauvegarde de la date du jour s'il y a un tableau et un nouveau poste
         const taille = this.posts.length;
-        if (taille !== 0 && enregistrer) {
+        // Création de la date d'un nouveau post
+        if (enregistrer) {
             this.posts[taille - 1].date = new Date();
             // Conversion en string pour l'enregistrement en BDD
             const latest_date = this.datepipe.transform(this.posts[taille - 1].date, 'Créée le dd/MM/yyyy à HH:mm:ss');
@@ -64,6 +65,7 @@ export class PostService {
         });
     }
 
+    // Sauvegarde du nombre de loveIts en BDD
     saveLoveIts(id: number, loveIts: number) {
         this.posts[id].loveIts = loveIts;
         const enregistrer = false;
