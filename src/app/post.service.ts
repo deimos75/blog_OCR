@@ -23,26 +23,26 @@ export class PostService {
     }
 
     // Ajout d'un post en BDD
-    addPost(newPost: Post, enregistrer: Boolean) {
+    addPost(newPost: Post, createDate: Boolean) {
         this.posts.push(newPost);
-        this.savePosts(enregistrer);
+        this.savePosts(createDate);
         this.emitPostSubject();
     }
 
     // Suppression d'un post en BDD
     deletePost(id: number) {
-        const enregistrer = false;
+        const createDate = false;
         this.posts.splice(id, 1);
-        this.savePosts(enregistrer);
+        this.savePosts(createDate);
         this.emitPostSubject();
     }
 
     // Sauvegarde des posts en BDD
-    savePosts(enregistrer: Boolean) {
+    savePosts(createDate: Boolean) {
         // Sauvegarde de la date du jour s'il y a un tableau et un nouveau poste
         const taille = this.posts.length;
         // Création de la date d'un nouveau post
-        if (enregistrer) {
+        if (createDate) {
             this.posts[taille - 1].date = new Date();
             // Conversion en string pour l'enregistrement en BDD
             const latest_date = this.datepipe.transform(this.posts[taille - 1].date, 'Créée le dd/MM/yyyy à HH:mm:ss');
@@ -64,8 +64,8 @@ export class PostService {
     // Sauvegarde du nombre de loveIts en BDD
     saveLoveIts(id: number, loveIts: number) {
         this.posts[id].loveIts = loveIts;
-        const enregistrer = false;
-        this.savePosts(enregistrer);
+        const createDate = false;
+        this.savePosts(createDate);
     }
 
 }

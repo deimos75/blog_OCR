@@ -20,7 +20,7 @@ export class NewPostComponent implements OnInit {
     this.initForm();
   }
 
-  // Initialisation du formulaire
+  // Initialisation du formulaire (méthode réactive)
   initForm() {
     this.postForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -37,8 +37,8 @@ export class NewPostComponent implements OnInit {
     const newPost = new Post(title, content, 0, '');
 
     // Ajout d'un nouveau poste au tableau des postes et sauvegarde en BDD
-    const enregister = true;  // Paramètre qui permet d'initialiser la date
-    this.postService.addPost(newPost, enregister);
+    const createDate = true;  // Paramètre qui permet d'initialiser la date
+    this.postService.addPost(newPost, createDate);
 
     // Rédirection vers les posts
     this.router.navigate(['/posts']);
