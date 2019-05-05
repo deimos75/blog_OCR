@@ -14,12 +14,8 @@ export class PostService {
     // Subject qui émettra le tableau des posts (grâce à emitPosts())
     postSubject = new Subject<any[]>();
 
-    constructor(public datepipe: DatePipe) {
-        this.getPosts();
-    }
+    constructor(public datepipe: DatePipe) {}
 
-
-    // ***************************************************** /
     // Emet le subject (cette méthode est appelée par toute les autres méthodes)
     emitPostSubject() {
         // Le Subject émet (next) une copie (slice) de tableau local
